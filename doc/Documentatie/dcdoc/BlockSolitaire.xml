@@ -1,0 +1,15 @@
+<AppLockerPolicy Version="1">
+  <RuleCollection Type="Exe" EnforcementMode="NotConfigured" />
+  <RuleCollection Type="Msi" EnforcementMode="NotConfigured" />
+  <RuleCollection Type="Script" EnforcementMode="NotConfigured" />
+  <RuleCollection Type="Dll" EnforcementMode="NotConfigured" />
+  <RuleCollection Type="Appx" EnforcementMode="NotConfigured">
+    <FilePublisherRule Id="ced562fa-d8d5-45e8-86f3-163159ca0d94" Name="Microsoft.MicrosoftSolitaireCollection, versie 3.9.0.0 en hoger van CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Description="" UserOrGroupSid="S-1-1-0" Action="Deny">
+      <Conditions>
+        <FilePublisherCondition PublisherName="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" ProductName="Microsoft.MicrosoftSolitaireCollection" BinaryName="*">
+          <BinaryVersionRange LowSection="3.9.0.0" HighSection="*" />
+        </FilePublisherCondition>
+      </Conditions>
+    </FilePublisherRule>
+  </RuleCollection>
+</AppLockerPolicy>

@@ -1,0 +1,30 @@
+# site.yml
+---
+- hosts: all
+  roles: []
+
+- hosts: charlie
+  roles: 
+    - webserver
+    - ansible-role-php-master
+    - ansible-role-postgresql-master
+    - drupal
+
+
+- hosts: bravo
+  roles: 
+  - bertvv.bind
+  - ansible-role-rh-base-master
+  #- custom.resolv_conf
+
+- hosts: delta
+  roles: 
+  - ansible-role-rh-base-master
+  - ansible-role-mailserver-master
+  - custom.resolv_conf
+
+- hosts: gamma
+  roles: 
+  - ansible-role-postgresql-master
+  - ansible-role-php-master
+  - drupal

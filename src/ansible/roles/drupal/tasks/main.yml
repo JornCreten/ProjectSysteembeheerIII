@@ -1,0 +1,93 @@
+---
+
+- name: Download drupal
+  get_url:
+    url: https://ftp.drupal.org/files/projects/drupal-{{ DRUPAL_VERSION }}.tar.gz
+    dest: /home/vagrant/drupal-{{ DRUPAL_VERSION }}.tar.gz
+
+- name: extract package
+  unarchive:
+    src: /home/vagrant/drupal-{{ DRUPAL_VERSION }}.tar.gz
+    dest: /home/vagrant
+    remote_src: true
+
+- name: make drupal dir
+  file:
+    path: /var/www/html/drupal
+    state: directory
+
+- copy:
+    src: /home/vagrant/drupal-{{ DRUPAL_VERSION }}/
+    dest: /var/www/html/drupal/
+    remote_src: true
+
+#- name: move drupal
+#  shell: mv /home/vagrant/drupal-{{ DRUPAL_VERSION }} /var/www/html/drupal
+
+- name: make sites default folder
+  file:
+    path: /var/www/html/drupal/sites/default/files
+    state: directory
+
+- name: Copy file to php page 
+  copy:
+    src: /var/www/html/drupal/sites/default/default.settings.php
+    dest: /var/www/html/drupal/sites/default/settings.php
+    mode: '0755'
+    remote_src: true
+
+- name: nginx php-fpm config file
+  template: 
+    dest: /etc/php-fpm.d/
+    src: phpdrupal.conf
+
+- name: Rename phpdrupal to drupal.conf for /etc/php-fpm
+  copy:
+     src: /etc/php-fpm.d/phpdrupal.conf
+     dest: /etc/php-fpm.d/drupal.conf
+     mode: '0755'
+     remote_src: true
+
+- name: remove phpdrupal because it messes with the php-fpm daemon and this is a nasty workaround
+  file:
+    path: /etc/php-fpm.d/phpdrupal.conf
+    state: absent
+
+
+- name: nginx drupal.d config file
+  template: 
+    dest: /etc/nginx/conf.d
+    src: drupal.conf
+
+- name: Selinux permissions
+  sefcontext:
+    target: "/var/www/html/drupal(/.*)?"
+    setype: httpd_sys_rw_content_t
+    state: present
+  sefcontext:
+    target: '/var/www/html/drupal/sites/default/settings.php'
+    setype: httpd_sys_rw_content_t
+    state: present
+  sefcontext:
+    target: '/var/www/html/drupal/sites/default/files'
+    setype: httpd_sys_rw_content_t
+    state: present
+
+- name: set permissions
+  shell: semanage fcontext -a -t httpd_sys_rw_content_t "/var/www/html/drupal(/.*)?"
+  shell: semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/drupal/sites/default/settings.php'
+  shell: semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/drupal/sites/default/files'
+  shell: restorecon -Rv /var/www/html/drupal
+  shell: setsebool -P httpd_can_sendmail on
+  shell: restorecon -v /var/www/html/drupal/sites/default/settings.php
+  shell: restorecon -Rv /var/www/html/drupal/sites/default/files
+  shell: chown -R nginx:nginx  /var/www/html/drupal/
+ 
+- name: Recursively change ownership of a directory
+  file:
+    path: /var/www/html/drupal/
+    state: directory
+    recurse: yes
+    owner: nginx
+    group: nginx
+

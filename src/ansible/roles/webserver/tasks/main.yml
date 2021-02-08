@@ -1,0 +1,33 @@
+---
+- name: install nginx
+  yum:
+    name:
+      - nginx
+      - php-pgsql
+      - php-json
+      
+- name: start nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+- name: start firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- firewalld:
+    port: 80/tcp
+    permanent: true
+    state: enabled
+
+- firewalld:
+    port: 443/tcp
+    permanent: true
+    state: enabled
+
+- name: reload service firewalld
+  systemd:
+    name: firewalld
+    state: reloaded

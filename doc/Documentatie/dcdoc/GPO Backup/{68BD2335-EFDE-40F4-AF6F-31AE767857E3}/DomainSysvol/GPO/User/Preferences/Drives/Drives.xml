@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Drives clsid="{8FDDCC1A-0C3C-43cd-A6B4-71A6DF20DA8C}"><Drive clsid="{935D1B74-9CB8-4e3c-9914-7DD559B7A417}" name="K:" status="K:" image="2" changed="2020-11-20 19:16:23" uid="{99B2DCAF-1F5E-43BF-9296-C3C681D7F1BD}" userContext="1" bypassErrors="1"><Properties action="U" thisDrive="NOCHANGE" allDrives="NOCHANGE" userName="" path="\\ALFA\CoronaSpace" label="" persistent="0" useLetter="1" letter="K"/><Filters><FilterOrgUnit bool="AND" not="0" name="OU=Alfa DC,DC=CORONA2020,DC=local" userContext="1" directMember="0"/></Filters></Drive>
+</Drives>

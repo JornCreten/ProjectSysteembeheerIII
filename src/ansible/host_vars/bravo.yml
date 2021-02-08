@@ -1,0 +1,74 @@
+---
+rhbase_install_packages:
+  - bind-utils
+  - bash-completion
+  - git
+  - nano
+  - vim-enhanced
+  - tree
+  - wget
+  - samba-client
+
+rhbase_start_services:
+  - firewalld
+  - network
+  - named
+
+rhbase_firewall_allow_services:
+  - dns
+
+bind_listen_ipv4:
+  - any
+
+bind_allow_query:
+  - any
+
+#bind_recursion: true
+
+bind_zones:
+  - name: corona2020.local
+#    create_reverse_zones: true 
+#    create_forward_zones: true  
+    primaries:
+      - 192.168.55.3
+    name_servers:
+      - bravo.corona2020.local.
+    networks:
+      - '192.168'
+    hosts:
+      - name: alfa
+        ip: 192.168.55.2
+      - name: bravo
+        ip: 192.168.55.3
+        aliases:
+          - ns1
+      - name: '@'   #charlie
+        ip: 192.168.55.4
+        aliases:
+          - www
+      - name: delta
+        ip: 192.168.55.5
+        aliases:
+          - mail-in
+          - mail-out
+          - mx
+      - name: gamma
+        ip: 192.168.55.100
+      - name: client
+        ip: 192.168.55.10
+    mail_servers:
+      - name: delta
+        preference: 10
+    services:
+      - name: _ldap._tcp.dc._msdcs
+        target: alfa
+        port: 53
+bind_forwarders:
+  - '8.8.8.8'
+  - '8.8.4.4'
+    
+#bind_acls:
+#  - name: trusted
+#    match_list:
+#      - 192.168.55.0 #/24
+#      - 192.168.55.3

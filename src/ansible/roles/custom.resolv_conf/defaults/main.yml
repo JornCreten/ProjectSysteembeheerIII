@@ -1,0 +1,7 @@
+---
+# defaults file for resolv_conf
+
+resolv_conf_nameservers:
+  - 192.168.55.3
+resolv_conf_search_domains:
+  - "corona2020.local"

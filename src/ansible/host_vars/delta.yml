@@ -1,0 +1,54 @@
+#group_vars/delta.yml
+#variables visible for delta (mailserver)
+---
+
+rhbase_install_packages:
+  - bind-utils
+  - bash-completion
+  - git
+  - nano
+  - vim-enhanced
+  - tree
+  - wget
+  - samba-client
+  - telnet
+
+rhbase_firewall_allow_services:
+  - imap
+  - imaps
+  - pop3
+  - pop3s
+  - smtp
+  - smtps
+  - smtp-submission
+
+postfix_myhostname: delta.corona2020.local
+postfix_mydomain: corona2020.local
+
+postfix_ldap: true
+ldap_fqdn1: alfa.CORONA2020.local
+ldap_dcname: alfa
+ldap_ou: Administrator
+ldap_domainname: corona2020.local
+ldap_root_domain: corona2020.local
+
+
+rhbase_users:
+  - name: yvesvdd
+    password: '$6$eFpVtcpnGKJxv4tX$3WBM6.3yvhlDd/vdupLjqK5MBf81A2vQyY1h13Go7k1GGLRYnI6W5uYttGS9yIbXpakwlh3j8qpDamNlAYR/c0'
+    shell: /sbin/nologin
+  - name: svendv
+    password: '$6$eFpVtcpnGKJxv4tX$3WBM6.3yvhlDd/vdupLjqK5MBf81A2vQyY1h13Go7k1GGLRYnI6W5uYttGS9yIbXpakwlh3j8qpDamNlAYR/c0'
+    shell: /sbin/nologin
+  - name: manonj
+    password: '$6$eFpVtcpnGKJxv4tX$3WBM6.3yvhlDd/vdupLjqK5MBf81A2vQyY1h13Go7k1GGLRYnI6W5uYttGS9yIbXpakwlh3j8qpDamNlAYR/c0'
+    shell: /sbin/nologin
+  - name: dariovh
+    password: 'Project'
+    shell: /sbin/nologin
+  - name: jornc
+    password: '$6$eFpVtcpnGKJxv4tX$3WBM6.3yvhlDd/vdupLjqK5MBf81A2vQyY1h13Go7k1GGLRYnI6W5uYttGS9yIbXpakwlh3j8qpDamNlAYR/c0'
+    shell: /sbin/nologin
+  - name: smtpuser
+    password: '$6$eFpVtcpnGKJxv4tX$3WBM6.3yvhlDd/vdupLjqK5MBf81A2vQyY1h13Go7k1GGLRYnI6W5uYttGS9yIbXpakwlh3j8qpDamNlAYR/c0'
+    shell: /sbin/nologin

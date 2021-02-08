@@ -1,0 +1,17 @@
+# group_vars/all.yml
+# Variables visible to all nodes
+---
+# mariadb role variables
+
+mysql_root_pass: VeryStrongPassword
+drupal_db_user: drupal-data
+drupal_db_name: drupal-user
+drupal_db_pass: StrongPass
+
+postgresql_databases:
+  - name: drupaldb
+    owner: admin
+
+postgresql_users:
+  - name: admin #required; the rest are optional
+    password: pass
